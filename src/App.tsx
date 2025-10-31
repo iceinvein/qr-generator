@@ -1,13 +1,7 @@
-import { Route, Routes } from "react-router-dom";
-
-import IndexPage from "@/pages/index";
+import QRGeneratorPage from "@/pages/qr-generator";
 
 function App() {
-	return (
-		<Routes>
-			<Route element={<IndexPage />} path="/" />
-		</Routes>
-	);
+	return <QRGeneratorPage />;
 }
 
 export default App;
