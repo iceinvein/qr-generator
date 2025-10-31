@@ -1,8 +1,10 @@
-# QR Code Generator
+# QR Magic ✨
 
 A modern, feature-rich QR code generator built with React, TypeScript, and HeroUI. Create customizable QR codes for various data types with logo branding, color customization, and multiple export formats.
 
-![QR Code Generator](https://img.shields.io/badge/React-19.2-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue) ![Vite](https://img.shields.io/badge/Vite-7.x-purple) ![HeroUI](https://img.shields.io/badge/HeroUI-v2-orange)
+🌐 **Live Demo**: [qr-magic.netlify.app](https://qr-magic.netlify.app)
+
+![React](https://img.shields.io/badge/React-19.2-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue) ![Vite](https://img.shields.io/badge/Vite-7.x-purple) ![HeroUI](https://img.shields.io/badge/HeroUI-v2-orange) [![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://app.netlify.com/sites/qr-magic/deploys)
 
 ## ✨ Features
 
@@ -211,3 +213,5 @@ For issues and questions, please open an issue on GitHub.
 ---
 
 Made with ❤️ using React, TypeScript, and HeroUI
+
+**QR Magic** - Create magical QR codes in seconds! ✨

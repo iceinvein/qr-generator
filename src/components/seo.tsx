@@ -15,11 +15,11 @@ interface SEOProps {
 }
 
 export function SEO({
-	title = "QR Code Generator - Create Custom QR Codes with Logo | Free Online Tool",
+	title = "QR Magic - Create Custom QR Codes with Logo | Free Online Tool",
 	description = "Free online QR code generator. Create customizable QR codes for URLs, WiFi, contacts, events, and more. Add logos, customize colors, and export as PNG or SVG. No signup required.",
-	keywords = "qr code generator, qr code maker, custom qr code, qr code with logo, wifi qr code, vcard qr code, free qr code",
-	image = "https://qrcodegen.app/og-image.png",
-	url = "https://qrcodegen.app/",
+	keywords = "qr code generator, qr code maker, custom qr code, qr code with logo, wifi qr code, vcard qr code, free qr code, qr magic",
+	image = "https://qr-magic.netlify.app/og-image.png",
+	url = "https://qr-magic.netlify.app/",
 	type = "website",
 }: SEOProps) {
 	useEffect(() => {

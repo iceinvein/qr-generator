@@ -41,13 +41,13 @@ export function StyleConfigurator({
 		<div className="space-y-6">
 			{/* Color Pickers Section */}
 			<div className="space-y-4">
-				<h3 className="text-lg font-semibold">Colors</h3>
+				<h3 className="font-semibold text-lg">Colors</h3>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 					{/* Foreground Color Picker */}
 					<div className="space-y-2">
 						<Tooltip content="Color of the QR code pattern">
-							<label className="text-sm font-medium">Foreground Color</label>
+							<label className="font-medium text-sm">Foreground Color</label>
 						</Tooltip>
 						<div className="flex items-center gap-3">
 							<Tooltip content="Click to pick a color">
@@ -57,7 +57,7 @@ export function StyleConfigurator({
 									onValueChange={(value) =>
 										onChange({ foregroundColor: value })
 									}
-									className="w-20 h-12 cursor-pointer"
+									className="h-12 w-20 cursor-pointer"
 									aria-label="Foreground color picker"
 								/>
 							</Tooltip>
@@ -76,7 +76,7 @@ export function StyleConfigurator({
 							</div>
 							{/* Color Preview Swatch */}
 							<div
-								className="w-12 h-12 rounded-md border-2 border-default-300"
+								className="h-12 w-12 rounded-md border-2 border-default-300"
 								style={{ backgroundColor: foregroundColor }}
 								aria-label="Foreground color preview"
 							/>
@@ -86,7 +86,7 @@ export function StyleConfigurator({
 					{/* Background Color Picker */}
 					<div className="space-y-2">
 						<Tooltip content="Background color behind the QR code">
-							<label className="text-sm font-medium">Background Color</label>
+							<label className="font-medium text-sm">Background Color</label>
 						</Tooltip>
 						<div className="flex items-center gap-3">
 							<Tooltip content="Click to pick a color">
@@ -96,7 +96,7 @@ export function StyleConfigurator({
 									onValueChange={(value) =>
 										onChange({ backgroundColor: value })
 									}
-									className="w-20 h-12 cursor-pointer"
+									className="h-12 w-20 cursor-pointer"
 									aria-label="Background color picker"
 								/>
 							</Tooltip>
@@ -115,7 +115,7 @@ export function StyleConfigurator({
 							</div>
 							{/* Color Preview Swatch */}
 							<div
-								className="w-12 h-12 rounded-md border-2 border-default-300"
+								className="h-12 w-12 rounded-md border-2 border-default-300"
 								style={{ backgroundColor: backgroundColor }}
 								aria-label="Background color preview"
 							/>
@@ -126,15 +126,15 @@ export function StyleConfigurator({
 
 			{/* Size and Margin Sliders Section */}
 			<div className="space-y-4">
-				<h3 className="text-lg font-semibold">Dimensions</h3>
+				<h3 className="font-semibold text-lg">Dimensions</h3>
 
 				{/* Size Slider */}
 				<div className="space-y-2">
-					<div className="flex justify-between items-center">
+					<div className="flex items-center justify-between">
 						<Tooltip content="Adjust the QR code dimensions in pixels">
-							<label className="text-sm font-medium">Size</label>
+							<label className="font-medium text-sm">Size</label>
 						</Tooltip>
-						<span className="text-sm text-default-500">{size}px</span>
+						<span className="text-default-500 text-sm">{size}px</span>
 					</div>
 					<Tooltip content="Drag to change QR code size (128-1024px)">
 						<Slider
@@ -150,7 +150,7 @@ export function StyleConfigurator({
 							aria-label="QR code size"
 						/>
 					</Tooltip>
-					<div className="flex justify-between text-xs text-default-400">
+					<div className="flex justify-between text-default-400 text-xs">
 						<span>128px</span>
 						<span>1024px</span>
 					</div>
@@ -158,11 +158,11 @@ export function StyleConfigurator({
 
 				{/* Margin Slider */}
 				<div className="space-y-2">
-					<div className="flex justify-between items-center">
+					<div className="flex items-center justify-between">
 						<Tooltip content="Adjust the quiet zone (white space) around the QR code">
-							<label className="text-sm font-medium">Margin</label>
+							<label className="font-medium text-sm">Margin</label>
 						</Tooltip>
-						<span className="text-sm text-default-500">{margin}</span>
+						<span className="text-default-500 text-sm">{margin}</span>
 					</div>
 					<Tooltip content="Drag to change margin size (0-10 modules)">
 						<Slider
@@ -178,7 +178,7 @@ export function StyleConfigurator({
 							aria-label="QR code margin"
 						/>
 					</Tooltip>
-					<div className="flex justify-between text-xs text-default-400">
+					<div className="flex justify-between text-default-400 text-xs">
 						<span>0</span>
 						<span>10</span>
 					</div>
@@ -187,7 +187,7 @@ export function StyleConfigurator({
 
 			{/* Error Correction Level Section */}
 			<div className="space-y-4">
-				<h3 className="text-lg font-semibold">Error Correction</h3>
+				<h3 className="font-semibold text-lg">Error Correction</h3>
 
 				<Tooltip content="Higher levels allow QR codes to be read even when damaged. Use High (H) when adding logos.">
 					<Select
@@ -208,7 +208,7 @@ export function StyleConfigurator({
 				</Tooltip>
 
 				<div className="space-y-2">
-					<p className="text-xs text-default-500">
+					<p className="text-default-500 text-xs">
 						Higher error correction allows the QR code to be read even if
 						partially damaged or obscured. Use High (H) when adding a logo.
 					</p>
@@ -216,11 +216,11 @@ export function StyleConfigurator({
 					{/* Critical warning when logo is present but error correction is not H */}
 					{hasLogo && errorCorrectionLevel !== "H" && (
 						<div
-							className="p-3 bg-danger-50 dark:bg-danger-100/10 border border-danger-200 rounded-lg"
+							className="rounded-lg border border-danger-200 bg-danger-50 p-3 dark:bg-danger-100/10"
 							role="alert"
 							aria-live="assertive"
 						>
-							<p className="text-xs text-danger-700 dark:text-danger-500 font-semibold">
+							<p className="font-semibold text-danger-700 text-xs dark:text-danger-500">
 								🚨 Critical: Logo detected with low error correction! QR code
 								may not scan properly. Set to High (H) to prevent data loss.
 							</p>
@@ -230,11 +230,11 @@ export function StyleConfigurator({
 					{/* Warning for low error correction with potential data loss */}
 					{!hasLogo && showLowECWarning && errorCorrectionLevel !== "H" && (
 						<div
-							className="p-3 bg-warning-50 dark:bg-warning-100/10 border border-warning-200 rounded-lg"
+							className="rounded-lg border border-warning-200 bg-warning-50 p-3 dark:bg-warning-100/10"
 							role="alert"
 							aria-live="polite"
 						>
-							<p className="text-xs text-warning-700 dark:text-warning-500 font-medium">
+							<p className="font-medium text-warning-700 text-xs dark:text-warning-500">
 								⚠️ Lower error correction levels may result in data loss if the
 								QR code is damaged
 							</p>

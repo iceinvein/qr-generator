@@ -109,8 +109,8 @@ export function BrandingPanel({
 	return (
 		<div className="space-y-4">
 			<div>
-				<h3 className="text-sm font-medium mb-2">Logo Branding</h3>
-				<p className="text-xs text-default-500 mb-3">
+				<h3 className="mb-2 font-medium text-sm">Logo Branding</h3>
+				<p className="mb-3 text-default-500 text-xs">
 					Add your logo to the center of the QR code
 				</p>
 			</div>
@@ -130,7 +130,7 @@ export function BrandingPanel({
 				<Card
 					isPressable
 					onPress={handleUploadClick}
-					className={`w-full border-2 border-dashed transition-colors cursor-pointer ${
+					className={`w-full cursor-pointer border-2 border-dashed transition-colors ${
 						isDragging
 							? "border-primary bg-primary-50 dark:bg-primary-100/10"
 							: "border-default-300 hover:border-primary hover:bg-default-100"
@@ -139,9 +139,9 @@ export function BrandingPanel({
 					onDragLeave={handleDragLeave}
 					onDrop={handleDrop}
 				>
-					<CardBody className="flex flex-col items-center justify-center py-12 gap-3 w-full">
+					<CardBody className="flex w-full flex-col items-center justify-center gap-3 py-12">
 						<svg
-							className={`w-16 h-16 ${isDragging ? "text-primary" : "text-default-400"}`}
+							className={`h-16 w-16 ${isDragging ? "text-primary" : "text-default-400"}`}
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
@@ -155,14 +155,14 @@ export function BrandingPanel({
 							/>
 						</svg>
 						<div className="flex flex-col items-center gap-1">
-							<p className="text-base font-semibold text-center">
+							<p className="text-center font-semibold text-base">
 								{isDragging ? "Drop logo here" : "Drag & drop logo here"}
 							</p>
-							<p className="text-sm text-default-500 text-center">
+							<p className="text-center text-default-500 text-sm">
 								or click to browse
 							</p>
 						</div>
-						<p className="text-xs text-default-400 text-center">
+						<p className="text-center text-default-400 text-xs">
 							PNG, JPG, or SVG (max 2MB)
 						</p>
 					</CardBody>
@@ -170,11 +170,11 @@ export function BrandingPanel({
 			) : (
 				<div className="space-y-3">
 					{/* Logo preview */}
-					<div className="relative border-2 border-default-200 rounded-lg p-4 bg-default-50 dark:bg-default-100">
+					<div className="relative rounded-lg border-2 border-default-200 bg-default-50 p-4 dark:bg-default-100">
 						<img
 							src={logoDataUrl}
 							alt="Logo preview"
-							className="max-w-full max-h-32 mx-auto object-contain"
+							className="mx-auto max-h-32 max-w-full object-contain"
 						/>
 					</div>
 
@@ -194,7 +194,7 @@ export function BrandingPanel({
 					{/* Logo size slider */}
 					<div className="space-y-2">
 						<Tooltip content="Adjust logo size as percentage of QR code">
-							<label className="text-sm font-medium">
+							<label className="font-medium text-sm">
 								Logo Size: {logoSize}%
 							</label>
 						</Tooltip>
@@ -210,7 +210,7 @@ export function BrandingPanel({
 								className="max-w-full"
 							/>
 						</Tooltip>
-						<p className="text-xs text-default-500">
+						<p className="text-default-500 text-xs">
 							Recommended: 10-25% for optimal scannability
 						</p>
 					</div>
@@ -218,11 +218,11 @@ export function BrandingPanel({
 					{/* Warning for large logo size */}
 					{showWarning && (
 						<div
-							className="p-3 bg-warning-50 dark:bg-warning-100/10 border border-warning-200 rounded-lg"
+							className="rounded-lg border border-warning-200 bg-warning-50 p-3 dark:bg-warning-100/10"
 							role="alert"
 							aria-live="polite"
 						>
-							<p className="text-xs text-warning-700 dark:text-warning-500">
+							<p className="text-warning-700 text-xs dark:text-warning-500">
 								⚠️ Logo size above 25% may affect QR code scannability
 							</p>
 						</div>
@@ -231,11 +231,11 @@ export function BrandingPanel({
 					{/* Error correction notification */}
 					{logo && errorCorrectionLevel === "H" && (
 						<div
-							className="p-3 bg-primary-50 dark:bg-primary-100/10 border border-primary-200 rounded-lg"
+							className="rounded-lg border border-primary-200 bg-primary-50 p-3 dark:bg-primary-100/10"
 							role="status"
 							aria-live="polite"
 						>
-							<p className="text-xs text-primary-700 dark:text-primary-500">
+							<p className="text-primary-700 text-xs dark:text-primary-500">
 								ℹ️ Error correction set to High (H) for better logo compatibility
 							</p>
 						</div>
@@ -246,11 +246,11 @@ export function BrandingPanel({
 			{/* Error display */}
 			{error && (
 				<div
-					className="p-3 bg-danger-50 dark:bg-danger-100/10 border border-danger-200 rounded-lg"
+					className="rounded-lg border border-danger-200 bg-danger-50 p-3 dark:bg-danger-100/10"
 					role="alert"
 					aria-live="assertive"
 				>
-					<p className="text-xs text-danger-700 dark:text-danger-500">
+					<p className="text-danger-700 text-xs dark:text-danger-500">
 						{error}
 					</p>
 				</div>

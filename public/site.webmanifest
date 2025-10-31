@@ -1,6 +1,6 @@
 {
-  "name": "QR Code Generator",
-  "short_name": "QR Gen",
+  "name": "QR Magic",
+  "short_name": "QR Magic",
   "description": "Create custom QR codes with logo support",
   "start_url": "/",
   "display": "standalone",

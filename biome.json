@@ -16,7 +16,16 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"a11y": "off"
+			"a11y": "off",
+			"nursery": {
+				"useSortedClasses": {
+					"fix": "safe",
+					"level": "warn",
+					"options": {
+						"functions": ["cn", "clsx"]
+					}
+				}
+			}
 		}
 	},
 	"javascript": {

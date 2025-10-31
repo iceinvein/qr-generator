@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://qrcodegen.app/sitemap.xml
+Sitemap: https://qr-magic.netlify.app/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 1

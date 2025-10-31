@@ -44,7 +44,7 @@ export const QRPreviewCanvas = forwardRef<
 
 	return (
 		<Card className="w-full">
-			<CardBody className="flex items-center justify-center p-8 min-h-[400px]">
+			<CardBody className="flex min-h-[400px] items-center justify-center p-8">
 				{/* ARIA live region for status announcements */}
 				<div
 					role="status"
@@ -71,16 +71,16 @@ export const QRPreviewCanvas = forwardRef<
 				)}
 
 				{error && (
-					<Card className="bg-danger-50 dark:bg-danger-900/20 border-danger-200 dark:border-danger-800">
+					<Card className="border-danger-200 bg-danger-50 dark:border-danger-800 dark:bg-danger-900/20">
 						<CardBody
-							className="text-center p-6"
+							className="p-6 text-center"
 							role="alert"
 							aria-live="assertive"
 						>
-							<p className="text-danger-600 dark:text-danger-400 font-semibold mb-2">
+							<p className="mb-2 font-semibold text-danger-600 dark:text-danger-400">
 								Failed to generate QR code
 							</p>
-							<p className="text-danger-500 dark:text-danger-300 text-sm">
+							<p className="text-danger-500 text-sm dark:text-danger-300">
 								{error}
 							</p>
 						</CardBody>

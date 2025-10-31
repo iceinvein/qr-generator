@@ -109,20 +109,20 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 	const IconComponent = currentType?.icon;
 
 	return (
-		<Card className="w-full h-full flex flex-col shadow-lg">
-			<CardBody className="gap-6 flex-1 overflow-y-auto pb-6">
+		<Card className="flex h-full w-full flex-col shadow-lg">
+			<CardBody className="flex-1 gap-6 overflow-y-auto pb-6">
 				{/* Header with current type */}
 				<div className="flex items-center gap-3">
 					{IconComponent && (
-						<div className="p-2 rounded-lg bg-primary/10">
-							<IconComponent className="w-6 h-6 text-primary" />
+						<div className="rounded-lg bg-primary/10 p-2">
+							<IconComponent className="h-6 w-6 text-primary" />
 						</div>
 					)}
 					<div>
-						<h2 className="text-xl font-bold" id="qr-generator-title">
+						<h2 className="font-bold text-xl" id="qr-generator-title">
 							{currentType?.label} QR Code
 						</h2>
-						<p className="text-sm text-default-500">
+						<p className="text-default-500 text-sm">
 							{currentType?.description}
 						</p>
 					</div>
@@ -166,9 +166,9 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 			</CardBody>
 
 			{/* Bottom Navigation Bar */}
-			<div className="fixed bottom-0 left-0 right-0 border-t border-divider bg-background/95 backdrop-blur-lg shadow-lg z-50">
-				<div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
-					<div className="flex items-center justify-center gap-1 sm:gap-2 overflow-x-auto scrollbar-hide">
+			<div className="fixed right-0 bottom-0 left-0 z-50 border-divider border-t bg-background/95 shadow-lg backdrop-blur-lg">
+				<div className="mx-auto max-w-7xl px-2 py-2 sm:px-4 sm:py-3">
+					<div className="scrollbar-hide flex items-center justify-center gap-1 overflow-x-auto sm:gap-2">
 						{QR_TYPES.map((type) => {
 							const Icon = type.icon;
 							return (
@@ -188,8 +188,8 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 											state.dataType === type.key ? "page" : undefined
 										}
 									>
-										<Icon className="w-4 h-4" />
-										<span className="hidden sm:inline text-xs sm:text-sm">
+										<Icon className="h-4 w-4" />
+										<span className="hidden text-xs sm:inline sm:text-sm">
 											{type.label}
 										</span>
 									</Button>

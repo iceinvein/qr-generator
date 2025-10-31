@@ -443,11 +443,11 @@ function VCardInput({
 			</Tooltip>
 			<Tooltip content="Additional notes (optional)">
 				<div>
-					<label className="block text-sm font-medium mb-1">
+					<label className="mb-1 block font-medium text-sm">
 						Note (Optional)
 					</label>
 					<textarea
-						className="w-full px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+						className="w-full resize-none rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="Additional information"
 						value={note}
 						onChange={(e) => {
@@ -545,8 +545,8 @@ function CalendarInput({
 			{error && <p className="text-danger text-sm">{error}</p>}
 
 			{/* Timezone info */}
-			<div className="p-2 bg-default-100 dark:bg-default-50 rounded-lg">
-				<p className="text-xs text-default-600">
+			<div className="rounded-lg bg-default-100 p-2 dark:bg-default-50">
+				<p className="text-default-600 text-xs">
 					🌍 Timezone: <span className="font-medium">{userTimezone}</span>
 				</p>
 			</div>
@@ -586,11 +586,11 @@ function CalendarInput({
 			</Tooltip>
 			<Tooltip content="Event description or notes (optional)">
 				<div>
-					<label className="block text-sm font-medium mb-1">
+					<label className="mb-1 block font-medium text-sm">
 						Description (Optional)
 					</label>
 					<textarea
-						className="w-full px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+						className="w-full resize-none rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
 						placeholder="Event details and agenda"
 						value={description}
 						onChange={(e) => {
