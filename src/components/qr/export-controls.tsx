@@ -4,8 +4,10 @@
  */
 
 import { Button } from "@heroui/button";
+import { Card, CardBody } from "@heroui/card";
 import { Radio, RadioGroup } from "@heroui/radio";
 import { Tooltip } from "@heroui/tooltip";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import type { ExportControlsProps, ExportFormat } from "@/types/qr";
 import { generateFilename } from "@/utils/qr-utils";
@@ -136,11 +138,8 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 	};
 
 	return (
-		<div
-			className="flex w-full flex-col gap-4"
-			role="region"
-			aria-label="Export controls"
-		>
+		<Card className="glass-strong w-full shadow-xl">
+			<CardBody className="gap-4" role="region" aria-label="Export controls">
 			{/* ARIA live region for export status */}
 			<div
 				role="status"
@@ -177,25 +176,28 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 			<Tooltip
 				content={`Download QR code as ${exportFormat.toUpperCase()} file`}
 			>
-				<Button
-					color="primary"
-					size="lg"
-					isLoading={isExporting}
-					onPress={() => {
-						if (exportFormat === "svg") {
-							exportAsSVG();
-						} else {
-							exportAsRaster(exportFormat as "png" | "jpeg" | "webp");
-						}
-					}}
-					className="w-full"
-					aria-label={`Download QR code as ${exportFormat.toUpperCase()}`}
-				>
-					{isExporting
-						? "Exporting..."
-						: `Download ${exportFormat.toUpperCase()}`}
-				</Button>
+				<motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+					<Button
+						color="primary"
+						size="lg"
+						isLoading={isExporting}
+						onPress={() => {
+							if (exportFormat === "svg") {
+								exportAsSVG();
+							} else {
+								exportAsRaster(exportFormat as "png" | "jpeg" | "webp");
+							}
+						}}
+						className="w-full"
+						aria-label={`Download QR code as ${exportFormat.toUpperCase()}`}
+					>
+						{isExporting
+							? "Exporting..."
+							: `Download ${exportFormat.toUpperCase()}`}
+					</Button>
+				</motion.div>
 			</Tooltip>
-		</div>
+			</CardBody>
+		</Card>
 	);
 }

@@ -3,6 +3,7 @@
  * Main page that orchestrates the QR code generation experience
  */
 
+import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { ExportControls } from "@/components/qr/export-controls";
 import { QRInputPanel } from "@/components/qr/qr-input-panel";
@@ -104,19 +105,25 @@ export default function QRGeneratorPage() {
 				{/* Responsive layout: single column on mobile, two columns on desktop */}
 				<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 					{/* Left column: Input Panel */}
-					<div
+					<motion.div
 						id="qr-input"
 						className="h-full w-full overflow-hidden"
 						tabIndex={-1}
+						initial={{ opacity: 0, x: -20 }}
+						animate={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.5, delay: 0.1 }}
 					>
 						<QRInputPanel state={qrState} onStateChange={handleStateChange} />
-					</div>
+					</motion.div>
 
 					{/* Right column: Preview and Export */}
-					<div
+					<motion.div
 						id="qr-preview"
 						className="flex w-full flex-col gap-6 overflow-y-auto"
 						tabIndex={-1}
+						initial={{ opacity: 0, x: 20 }}
+						animate={{ opacity: 1, x: 0 }}
+						transition={{ duration: 0.5, delay: 0.2 }}
 					>
 						<QRPreviewCanvas
 							ref={canvasRef}
@@ -125,7 +132,7 @@ export default function QRGeneratorPage() {
 							onGenerationError={handleGenerationError}
 						/>
 						<ExportControls state={qrState} canvasRef={canvasRef} />
-					</div>
+					</motion.div>
 				</div>
 			</div>
 		</DefaultLayout>

@@ -30,9 +30,12 @@ export const QRPreviewCanvas = forwardRef<
 
 	// Handle render completion
 	const handleRenderComplete = () => {
-		setIsLoading(false);
-		setError(null);
-		onGenerationComplete();
+		// Delay showing QR to let animation complete
+		setTimeout(() => {
+			setIsLoading(false);
+			setError(null);
+			onGenerationComplete();
+		}, 800);
 	};
 
 	// Handle render errors
@@ -43,7 +46,7 @@ export const QRPreviewCanvas = forwardRef<
 	};
 
 	return (
-		<Card className="w-full">
+		<Card className="glass-strong w-full shadow-xl">
 			<CardBody className="flex min-h-[400px] items-center justify-center p-8">
 				{/* ARIA live region for status announcements */}
 				<div
@@ -87,11 +90,8 @@ export const QRPreviewCanvas = forwardRef<
 					</Card>
 				)}
 
-				{!error && (
+				{!error && !isLoading && (
 					<div
-						className={
-							isLoading ? "opacity-0" : "opacity-100 transition-opacity"
-						}
 						role="img"
 						aria-label={`QR code for ${debouncedState.dataType}: ${debouncedState.content || "empty"}`}
 					>

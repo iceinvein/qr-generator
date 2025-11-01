@@ -53,6 +53,13 @@ A modern, feature-rich QR code generator built with React, TypeScript, and HeroU
 - **Dark Mode** - Full dark mode support
 - **Responsive Design** - Works on desktop and mobile
 
+### ✨ Modern UI
+- **Glassmorphism Design** - Frosted glass effects with backdrop blur
+- **Smooth Animations** - Framer Motion powered transitions
+- **Dynamic Gradient Background** - Animated color-shifting background
+- **Floating Elements** - Subtle decorative animations
+- **Interactive Feedback** - Hover and press animations throughout
+
 ## 🚀 Getting Started
 
 ### Prerequisites

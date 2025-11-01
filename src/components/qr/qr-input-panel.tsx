@@ -6,6 +6,7 @@
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 import { Tooltip } from "@heroui/tooltip";
+import { motion } from "framer-motion";
 import {
 	Calendar,
 	Link,
@@ -117,8 +118,9 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 	const IconComponent = currentType?.icon;
 
 	return (
-		<Card className="flex h-full w-full flex-col shadow-lg">
-			<CardBody className="flex-1 gap-6 overflow-y-auto pb-6">
+		<>
+			<Card className="glass-strong flex h-full w-full flex-col shadow-xl">
+				<CardBody className="flex-1 gap-6 overflow-y-auto">
 				{/* Header with current type */}
 				<div className="flex items-center gap-3">
 					{IconComponent && (
@@ -182,41 +184,64 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 					/>
 				</div>
 			</CardBody>
+		</Card>
 
-			{/* Bottom Navigation Bar */}
-			<div className="fixed right-0 bottom-0 left-0 z-50 border-divider border-t bg-background/95 shadow-lg backdrop-blur-lg">
-				<div className="mx-auto max-w-7xl px-2 py-2 sm:px-4 sm:py-3">
-					<div className="scrollbar-hide flex items-center justify-center gap-1 overflow-x-auto sm:gap-2">
-						{QR_TYPES.map((type) => {
+		{/* Bottom Navigation Bar - Fixed at bottom of viewport */}
+		<motion.div
+			className="glass-navbar fixed right-0 bottom-0 left-0 z-50 shadow-2xl"
+			initial={{ y: 100, opacity: 0 }}
+			animate={{ y: 0, opacity: 1 }}
+			transition={{ duration: 0.5, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
+		>
+				<div className="mx-auto max-w-7xl px-2 py-3 sm:px-4 sm:py-4">
+					<div className="scrollbar-hide flex items-center justify-center gap-2 overflow-x-auto sm:gap-3">
+						{QR_TYPES.map((type, index) => {
 							const Icon = type.icon;
+							const isActive = state.dataType === type.key;
 							return (
 								<Tooltip key={type.key} content={type.description} delay={500}>
-									<Button
-										size="sm"
-										variant={state.dataType === type.key ? "solid" : "light"}
-										color={state.dataType === type.key ? "primary" : "default"}
-										onPress={() => handleDataTypeChange(type.key)}
-										className={`min-w-fit shrink-0 transition-all ${
-											state.dataType === type.key
-												? "scale-105"
-												: "hover:scale-105 hover:bg-default-100"
-										}`}
-										aria-label={`Select ${type.label} QR code type`}
-										aria-current={
-											state.dataType === type.key ? "page" : undefined
-										}
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{
+											duration: 0.3,
+											delay: 0.4 + index * 0.05,
+											ease: [0.4, 0, 0.2, 1],
+										}}
+										whileHover={{ scale: 1.05 }}
+										whileTap={{ scale: 0.95 }}
 									>
-										<Icon className="h-4 w-4" />
-										<span className="hidden text-xs sm:inline sm:text-sm">
-											{type.label}
-										</span>
-									</Button>
+										<Button
+											size="sm"
+											variant={isActive ? "solid" : "light"}
+											color={isActive ? "primary" : "default"}
+											onPress={() => handleDataTypeChange(type.key)}
+											className={`min-w-fit shrink-0 transition-all duration-200 ${
+												isActive
+													? "shadow-lg"
+													: "hover:bg-default-100 dark:hover:bg-default-50"
+											}`}
+											aria-label={`Select ${type.label} QR code type`}
+											aria-current={isActive ? "page" : undefined}
+										>
+											<motion.div
+												className="flex items-center gap-2"
+												animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+												transition={{ duration: 0.3 }}
+											>
+												<Icon className="h-4 w-4" />
+												<span className="hidden text-xs font-medium sm:inline sm:text-sm">
+													{type.label}
+												</span>
+											</motion.div>
+										</Button>
+									</motion.div>
 								</Tooltip>
 							);
 						})}
 					</div>
 				</div>
-			</div>
-		</Card>
+			</motion.div>
+		</>
 	);
 }

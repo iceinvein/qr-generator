@@ -180,12 +180,7 @@ export const QRCodeRenderer = forwardRef<
 					});
 				}
 
-				// Call completion handler after a short delay to ensure rendering is done
-				const timeoutId = setTimeout(() => {
-					handleRenderComplete();
-				}, 50);
-
-				return () => clearTimeout(timeoutId);
+				handleRenderComplete();
 			} catch (error) {
 				console.error("Error rendering QR code:", error);
 				handleRenderError(

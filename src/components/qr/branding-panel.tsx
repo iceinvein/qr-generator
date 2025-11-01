@@ -135,10 +135,10 @@ export function BrandingPanel({
 				<Card
 					isPressable
 					onPress={handleUploadClick}
-					className={`w-full cursor-pointer border-2 border-dashed transition-colors ${
+					className={`glass-subtle w-full cursor-pointer border-2 border-dashed transition-all duration-300 ${
 						isDragging
-							? "border-primary bg-primary-50 dark:bg-primary-100/10"
-							: "border-default-300 hover:border-primary hover:bg-default-100"
+							? "scale-105 border-primary bg-primary-50 dark:bg-primary-100/10"
+							: "border-default-300 hover:scale-102 hover:border-primary hover:bg-default-100"
 					}`}
 					onDragOver={handleDragOver}
 					onDragLeave={handleDragLeave}
@@ -175,7 +175,7 @@ export function BrandingPanel({
 			) : (
 				<div className="space-y-3">
 					{/* Logo preview */}
-					<div className="relative rounded-lg border-2 border-default-200 bg-default-50 p-4 dark:bg-default-100">
+					<div className="glass-subtle relative rounded-lg border-2 border-default-200 p-4">
 						<img
 							src={logoDataUrl}
 							alt="Logo preview"

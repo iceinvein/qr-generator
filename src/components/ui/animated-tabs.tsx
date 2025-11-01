@@ -89,7 +89,7 @@ export function AnimatedTabs({
 		<div className="flex w-full flex-col gap-2">
 			{/* Content Container with animated height */}
 			<motion.div
-				className="relative w-full rounded-xl border border-default-200 bg-default-50/50 backdrop-blur-md"
+				className="glass relative w-full rounded-xl"
 				animate={{ height: contentHeight }}
 				transition={transition}
 				style={{ overflow: "hidden" }}
@@ -133,7 +133,7 @@ export function AnimatedTabs({
 			</motion.div>
 
 			{/* Tab Buttons */}
-			<ul className="flex w-full gap-0 rounded-xl border border-default-200 bg-default-50/50 p-1 backdrop-blur-md">
+			<ul className="glass flex w-full gap-0 rounded-xl p-1">
 				{tabs.map((tab, index) => {
 					const isActive = tab.id === activeTab;
 

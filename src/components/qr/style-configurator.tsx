@@ -102,39 +102,45 @@ export function StyleConfigurator({
 					<div className="space-y-4">
 						<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 							{/* Foreground Color Picker */}
-							<div className="space-y-2">
+							<div className="flex flex-col space-y-2">
 								<Tooltip content="Color of the QR code pattern">
 									<label className="font-medium text-sm">
 										Foreground Color
 									</label>
 								</Tooltip>
-								<div className="flex items-center gap-3">
+								<div className="flex items-stretch gap-2">
 									<Tooltip content="Click to pick a color">
-										<Input
-											type="color"
-											value={getColorString(foregroundColor)}
-											onValueChange={(value) =>
-												onChange({ foregroundColor: value })
-											}
-											className="h-12 w-20 cursor-pointer"
-											aria-label="Foreground color picker"
-										/>
-									</Tooltip>
-									<div className="flex-1">
-										<Tooltip content="Enter hex color code">
+										<div className="shrink-0">
 											<Input
-												type="text"
+												type="color"
 												value={getColorString(foregroundColor)}
 												onValueChange={(value) =>
 													onChange({ foregroundColor: value })
 												}
-												placeholder="#000000"
-												aria-label="Foreground color hex value"
+												classNames={{
+													input: "cursor-pointer",
+													inputWrapper: "h-12 w-16",
+												}}
+												aria-label="Foreground color picker"
 											/>
-										</Tooltip>
-									</div>
+										</div>
+									</Tooltip>
+									<Tooltip content="Enter hex color code">
+										<Input
+											type="text"
+											value={getColorString(foregroundColor)}
+											onValueChange={(value) =>
+												onChange({ foregroundColor: value })
+											}
+											placeholder="#000000"
+											classNames={{
+												inputWrapper: "h-12",
+											}}
+											aria-label="Foreground color hex value"
+										/>
+									</Tooltip>
 									<div
-										className="h-12 w-12 rounded-md border-2 border-default-300"
+										className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
 										style={{ backgroundColor: getColorString(foregroundColor) }}
 										aria-label="Foreground color preview"
 									/>
@@ -142,39 +148,45 @@ export function StyleConfigurator({
 							</div>
 
 							{/* Background Color Picker */}
-							<div className="space-y-2">
+							<div className="flex flex-col space-y-2">
 								<Tooltip content="Background color behind the QR code">
 									<label className="font-medium text-sm">
 										Background Color
 									</label>
 								</Tooltip>
-								<div className="flex items-center gap-3">
+								<div className="flex items-stretch gap-2">
 									<Tooltip content="Click to pick a color">
-										<Input
-											type="color"
-											value={getColorString(backgroundColor)}
-											onValueChange={(value) =>
-												onChange({ backgroundColor: value })
-											}
-											className="h-12 w-20 cursor-pointer"
-											aria-label="Background color picker"
-										/>
-									</Tooltip>
-									<div className="flex-1">
-										<Tooltip content="Enter hex color code">
+										<div className="shrink-0">
 											<Input
-												type="text"
+												type="color"
 												value={getColorString(backgroundColor)}
 												onValueChange={(value) =>
 													onChange({ backgroundColor: value })
 												}
-												placeholder="#FFFFFF"
-												aria-label="Background color hex value"
+												classNames={{
+													input: "cursor-pointer",
+													inputWrapper: "h-12 w-16",
+												}}
+												aria-label="Background color picker"
 											/>
-										</Tooltip>
-									</div>
+										</div>
+									</Tooltip>
+									<Tooltip content="Enter hex color code">
+										<Input
+											type="text"
+											value={getColorString(backgroundColor)}
+											onValueChange={(value) =>
+												onChange({ backgroundColor: value })
+											}
+											placeholder="#FFFFFF"
+											classNames={{
+												inputWrapper: "h-12",
+											}}
+											aria-label="Background color hex value"
+										/>
+									</Tooltip>
 									<div
-										className="h-12 w-12 rounded-md border-2 border-default-300"
+										className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
 										style={{ backgroundColor: getColorString(backgroundColor) }}
 										aria-label="Background color preview"
 									/>
@@ -276,33 +288,39 @@ export function StyleConfigurator({
 									Corner Square Color
 								</label>
 							</Tooltip>
-							<div className="flex items-center gap-3">
+							<div className="flex items-stretch gap-2">
 								<Tooltip content="Click to pick a color">
-									<Input
-										type="color"
-										value={getColorString(cornerSquareColor)}
-										onValueChange={(value) =>
-											onChange({ cornerSquareColor: value })
-										}
-										className="h-12 w-20 cursor-pointer"
-										aria-label="Corner square color picker"
-									/>
-								</Tooltip>
-								<div className="flex-1">
-									<Tooltip content="Enter hex color code">
+									<div className="shrink-0">
 										<Input
-											type="text"
+											type="color"
 											value={getColorString(cornerSquareColor)}
 											onValueChange={(value) =>
 												onChange({ cornerSquareColor: value })
 											}
-											placeholder="#000000"
-											aria-label="Corner square color hex value"
+											classNames={{
+												input: "cursor-pointer",
+												inputWrapper: "h-12 w-16",
+											}}
+											aria-label="Corner square color picker"
 										/>
-									</Tooltip>
-								</div>
+									</div>
+								</Tooltip>
+								<Tooltip content="Enter hex color code">
+									<Input
+										type="text"
+										value={getColorString(cornerSquareColor)}
+										onValueChange={(value) =>
+											onChange({ cornerSquareColor: value })
+										}
+										placeholder="#000000"
+										classNames={{
+											inputWrapper: "h-12",
+										}}
+										aria-label="Corner square color hex value"
+									/>
+								</Tooltip>
 								<div
-									className="h-12 w-12 rounded-md border-2 border-default-300"
+									className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
 									style={{
 										backgroundColor: getColorString(cornerSquareColor),
 									}}
@@ -337,33 +355,39 @@ export function StyleConfigurator({
 							<Tooltip content="Color of the corner dot markers">
 								<label className="font-medium text-sm">Corner Dot Color</label>
 							</Tooltip>
-							<div className="flex items-center gap-3">
+							<div className="flex items-stretch gap-2">
 								<Tooltip content="Click to pick a color">
-									<Input
-										type="color"
-										value={getColorString(cornerDotColor)}
-										onValueChange={(value) =>
-											onChange({ cornerDotColor: value })
-										}
-										className="h-12 w-20 cursor-pointer"
-										aria-label="Corner dot color picker"
-									/>
-								</Tooltip>
-								<div className="flex-1">
-									<Tooltip content="Enter hex color code">
+									<div className="shrink-0">
 										<Input
-											type="text"
+											type="color"
 											value={getColorString(cornerDotColor)}
 											onValueChange={(value) =>
 												onChange({ cornerDotColor: value })
 											}
-											placeholder="#000000"
-											aria-label="Corner dot color hex value"
+											classNames={{
+												input: "cursor-pointer",
+												inputWrapper: "h-12 w-16",
+											}}
+											aria-label="Corner dot color picker"
 										/>
-									</Tooltip>
-								</div>
+									</div>
+								</Tooltip>
+								<Tooltip content="Enter hex color code">
+									<Input
+										type="text"
+										value={getColorString(cornerDotColor)}
+										onValueChange={(value) =>
+											onChange({ cornerDotColor: value })
+										}
+										placeholder="#000000"
+										classNames={{
+											inputWrapper: "h-12",
+										}}
+										aria-label="Corner dot color hex value"
+									/>
+								</Tooltip>
 								<div
-									className="h-12 w-12 rounded-md border-2 border-default-300"
+									className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
 									style={{ backgroundColor: getColorString(cornerDotColor) }}
 									aria-label="Corner dot color preview"
 								/>
