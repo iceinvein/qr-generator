@@ -251,7 +251,7 @@ export function encodeCalendarEvent(data: CalendarEventData): string {
 			return date.toISOString().replace(/[-:]/g, "").split("T")[0];
 		}
 		// Regular events include time
-		return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+		return `${date.toISOString().replace(/[-:]/g, "").split(".")[0]}Z`;
 	};
 
 	let ical = "BEGIN:VCALENDAR\n";

@@ -18,17 +18,27 @@ export default function QRGeneratorPage() {
 		dataType: "text",
 		content: "",
 
-		// Style configuration
+		// Basic style configuration
 		foregroundColor: "#000000",
 		backgroundColor: "#ffffff",
 		size: 256,
 		margin: 4,
 		errorCorrectionLevel: "M",
+		shape: "square",
+
+		// Advanced dot styling
+		dotStyle: "square",
+		cornerSquareStyle: "square",
+		cornerSquareColor: "#000000",
+		cornerDotStyle: "square",
+		cornerDotColor: "#000000",
 
 		// Branding
 		logo: null,
 		logoDataUrl: null,
-		logoSize: 20,
+		logoSize: 40,
+		logoMargin: 4,
+		hideBackgroundDots: true,
 
 		// Export
 		exportFormat: "png",

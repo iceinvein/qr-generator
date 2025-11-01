@@ -101,6 +101,14 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 		onStateChange({ logoSize: size });
 	};
 
+	const handleLogoMarginChange = (margin: number) => {
+		onStateChange({ logoMargin: margin });
+	};
+
+	const handleHideBackgroundDotsChange = (hide: boolean) => {
+		onStateChange({ hideBackgroundDots: hide });
+	};
+
 	const handleErrorCorrectionChange = (level: "H") => {
 		onStateChange({ errorCorrectionLevel: level });
 	};
@@ -145,6 +153,12 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 						size={state.size}
 						margin={state.margin}
 						errorCorrectionLevel={state.errorCorrectionLevel}
+						shape={state.shape}
+						dotStyle={state.dotStyle}
+						cornerSquareStyle={state.cornerSquareStyle}
+						cornerSquareColor={state.cornerSquareColor}
+						cornerDotStyle={state.cornerDotStyle}
+						cornerDotColor={state.cornerDotColor}
 						hasLogo={!!state.logo}
 						onChange={onStateChange}
 					/>
@@ -156,10 +170,14 @@ export function QRInputPanel({ state, onStateChange }: QRInputPanelProps) {
 						logo={state.logo}
 						logoDataUrl={state.logoDataUrl}
 						logoSize={state.logoSize}
+						logoMargin={state.logoMargin}
+						hideBackgroundDots={state.hideBackgroundDots}
 						errorCorrectionLevel={state.errorCorrectionLevel}
 						onLogoUpload={handleLogoUpload}
 						onLogoRemove={handleLogoRemove}
 						onLogoSizeChange={handleLogoSizeChange}
+						onLogoMarginChange={handleLogoMarginChange}
+						onHideBackgroundDotsChange={handleHideBackgroundDotsChange}
 						onErrorCorrectionChange={handleErrorCorrectionChange}
 					/>
 				</div>

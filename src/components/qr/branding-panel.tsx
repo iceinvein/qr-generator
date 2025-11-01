@@ -5,6 +5,7 @@
 import { Button } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 import { Slider } from "@heroui/slider";
+import { Switch } from "@heroui/switch";
 import { Tooltip } from "@heroui/tooltip";
 import { useRef, useState } from "react";
 import type { BrandingPanelProps } from "@/types/qr";
@@ -14,10 +15,14 @@ export function BrandingPanel({
 	logo,
 	logoDataUrl,
 	logoSize,
+	logoMargin,
+	hideBackgroundDots,
 	errorCorrectionLevel,
 	onLogoUpload,
 	onLogoRemove,
 	onLogoSizeChange,
+	onLogoMarginChange,
+	onHideBackgroundDotsChange,
 	onErrorCorrectionChange,
 }: BrandingPanelProps) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -198,12 +203,12 @@ export function BrandingPanel({
 								Logo Size: {logoSize}%
 							</label>
 						</Tooltip>
-						<Tooltip content="Drag to adjust logo size (10-30%). Keep below 25% for best scannability">
+						<Tooltip content="Drag to adjust logo size (10-50%). Keep below 40% for best scannability">
 							<Slider
 								size="sm"
 								step={1}
 								minValue={10}
-								maxValue={30}
+								maxValue={50}
 								value={logoSize}
 								onChange={handleLogoSizeChange}
 								aria-label="Logo size percentage"
@@ -211,7 +216,52 @@ export function BrandingPanel({
 							/>
 						</Tooltip>
 						<p className="text-default-500 text-xs">
-							Recommended: 10-25% for optimal scannability
+							Recommended: 10-40% for optimal scannability
+						</p>
+					</div>
+
+					{/* Logo margin slider */}
+					<div className="space-y-2">
+						<Tooltip content="Adjust padding around the logo">
+							<label className="font-medium text-sm">
+								Logo Margin: {logoMargin}px
+							</label>
+						</Tooltip>
+						<Tooltip content="Drag to adjust logo margin (0-20px)">
+							<Slider
+								size="sm"
+								step={1}
+								minValue={0}
+								maxValue={20}
+								value={logoMargin}
+								onChange={(value: number | number[]) => {
+									const margin = Array.isArray(value) ? value[0] : value;
+									onLogoMarginChange(margin);
+								}}
+								aria-label="Logo margin in pixels"
+								className="max-w-full"
+							/>
+						</Tooltip>
+						<p className="text-default-500 text-xs">
+							Adds white space around the logo
+						</p>
+					</div>
+
+					{/* Hide background dots switch */}
+					<div className="space-y-2">
+						<Tooltip content="Hide QR code dots behind the logo for cleaner appearance">
+							<Switch
+								isSelected={hideBackgroundDots}
+								onValueChange={onHideBackgroundDotsChange}
+								size="sm"
+							>
+								<span className="font-medium text-sm">
+									Hide Background Dots
+								</span>
+							</Switch>
+						</Tooltip>
+						<p className="text-default-500 text-xs">
+							Removes QR dots covered by the logo
 						</p>
 					</div>
 

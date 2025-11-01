@@ -21,9 +21,9 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 	};
 
 	/**
-	 * Export QR code as PNG
+	 * Export QR code as raster image (PNG, JPEG, WEBP)
 	 */
-	const exportAsPNG = async () => {
+	const exportAsRaster = async (format: "png" | "jpeg" | "webp") => {
 		try {
 			setIsExporting(true);
 
@@ -33,19 +33,26 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 				throw new Error("Canvas not found");
 			}
 
+			// Determine MIME type
+			const mimeType = `image/${format}`;
+
 			// Convert canvas to blob
 			const blob = await new Promise<Blob>((resolve, reject) => {
-				canvas.toBlob((blob) => {
-					if (blob) {
-						resolve(blob);
-					} else {
-						reject(new Error("Failed to generate PNG"));
-					}
-				}, "image/png");
+				canvas.toBlob(
+					(blob) => {
+						if (blob) {
+							resolve(blob);
+						} else {
+							reject(new Error(`Failed to generate ${format.toUpperCase()}`));
+						}
+					},
+					mimeType,
+					0.95, // Quality for JPEG/WEBP
+				);
 			});
 
 			// Generate filename with timestamp
-			const filename = generateFilename("png");
+			const filename = generateFilename(format);
 
 			// Create download link and trigger download
 			const url = URL.createObjectURL(blob);
@@ -59,10 +66,10 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 			// Clean up
 			URL.revokeObjectURL(url);
 		} catch (error) {
-			console.error("PNG export failed:", error);
+			console.error(`${format.toUpperCase()} export failed:`, error);
 			// Show error toast
 			alert(
-				`Failed to export PNG: ${error instanceof Error ? error.message : "Unknown error"}`,
+				`Failed to export ${format.toUpperCase()}: ${error instanceof Error ? error.message : "Unknown error"}`,
 			);
 		} finally {
 			setIsExporting(false);
@@ -144,7 +151,7 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 				{isExporting && `Exporting QR code as ${exportFormat.toUpperCase()}`}
 			</div>
 
-			<Tooltip content="PNG for raster images, SVG for scalable vector graphics">
+			<Tooltip content="Choose export format: PNG, JPEG, WEBP for raster images, SVG for scalable vector graphics">
 				<RadioGroup
 					label="Export Format"
 					orientation="horizontal"
@@ -154,6 +161,12 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 				>
 					<Radio value="png" aria-label="Export as PNG image">
 						PNG
+					</Radio>
+					<Radio value="jpeg" aria-label="Export as JPEG image">
+						JPEG
+					</Radio>
+					<Radio value="webp" aria-label="Export as WEBP image">
+						WEBP
 					</Radio>
 					<Radio value="svg" aria-label="Export as SVG vector graphic">
 						SVG
@@ -168,7 +181,13 @@ export function ExportControls({ state, canvasRef }: ExportControlsProps) {
 					color="primary"
 					size="lg"
 					isLoading={isExporting}
-					onPress={exportFormat === "png" ? exportAsPNG : exportAsSVG}
+					onPress={() => {
+						if (exportFormat === "svg") {
+							exportAsSVG();
+						} else {
+							exportAsRaster(exportFormat as "png" | "jpeg" | "webp");
+						}
+					}}
 					className="w-full"
 					aria-label={`Download QR code as ${exportFormat.toUpperCase()}`}
 				>

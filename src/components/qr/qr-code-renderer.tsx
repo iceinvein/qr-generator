@@ -6,11 +6,28 @@ import {
 	useImperativeHandle,
 	useRef,
 } from "react";
-import type { QRCodeRendererProps } from "@/types/qr";
+import type { ColorOption, QRCodeRendererProps } from "@/types/qr";
+
+/**
+ * Convert ColorOption to qr-code-styling format
+ */
+function convertColorOption(color: ColorOption) {
+	if (typeof color === "string") {
+		return { color };
+	}
+	// It's a gradient
+	return {
+		gradient: {
+			type: color.type,
+			rotation: color.rotation,
+			colorStops: color.colorStops,
+		},
+	};
+}
 
 /**
  * QRCodeRenderer component
- * Renders a QR code with optional logo overlay using qr-code-styling library
+ * Renders a QR code with full styling capabilities using qr-code-styling library
  */
 export const QRCodeRenderer = forwardRef<
 	HTMLCanvasElement,
@@ -24,8 +41,16 @@ export const QRCodeRenderer = forwardRef<
 			size,
 			margin,
 			errorCorrectionLevel,
+			shape,
+			dotStyle,
+			cornerSquareStyle,
+			cornerSquareColor,
+			cornerDotStyle,
+			cornerDotColor,
 			logoDataUrl,
 			logoSize,
+			logoMargin,
+			hideBackgroundDots,
 			onRenderComplete,
 			onRenderError,
 		},
@@ -52,8 +77,9 @@ export const QRCodeRenderer = forwardRef<
 			onRenderError?.(error);
 		});
 
-		// Track previous margin to detect changes that require recreation
+		// Track previous margin and shape to detect changes that require recreation
 		const prevMarginRef = useRef<number>(margin);
+		const prevShapeRef = useRef<string>(shape);
 
 		useEffect(() => {
 			if (!containerRef.current || !content || content.trim() === "") {
@@ -66,44 +92,57 @@ export const QRCodeRenderer = forwardRef<
 
 				const errorLevel = errorCorrectionLevel as "L" | "M" | "Q" | "H";
 
-				// If margin changed, we need to recreate the QR code
-				// because update() doesn't support margin changes
+				// Convert color options to qr-code-styling format
+				const dotsColorConfig = convertColorOption(foregroundColor);
+				const backgroundColorConfig = convertColorOption(backgroundColor);
+				const cornerSquareColorConfig = convertColorOption(cornerSquareColor);
+				const cornerDotColorConfig = convertColorOption(cornerDotColor);
+
+				// If margin or shape changed, we need to recreate the QR code
 				const marginChanged = prevMarginRef.current !== margin;
-				if (marginChanged && qrRef.current) {
+				const shapeChanged = prevShapeRef.current !== shape;
+
+				if ((marginChanged || shapeChanged) && qrRef.current) {
 					// Clear the container
 					if (containerRef.current) {
 						containerRef.current.innerHTML = "";
 					}
 					qrRef.current = null;
 					prevMarginRef.current = margin;
+					prevShapeRef.current = shape;
 				}
 
 				if (!qrRef.current) {
-					// Create new QR code instance
-					// Note: margin of 0 means no quiet zone, any value > 0 adds a quiet zone
-					// The library seems to treat margin as boolean-like (0 = off, >0 = on with fixed size)
+					// Create new QR code instance with full styling options
 					qrRef.current = new QRCodeStyling({
 						width: size,
 						height: size,
 						type: "canvas",
+						shape,
 						data: content,
 						margin,
 						qrOptions: {
 							errorCorrectionLevel: errorLevel,
 						},
 						dotsOptions: {
-							color: foregroundColor,
-							type: "square",
-							roundSize: false, // Disable rounding to allow precise margin
+							...dotsColorConfig,
+							type: dotStyle,
+							roundSize: false,
 						},
-						backgroundOptions: {
-							color: backgroundColor,
+						backgroundOptions: backgroundColorConfig,
+						cornersSquareOptions: {
+							...cornerSquareColorConfig,
+							type: cornerSquareStyle,
+						},
+						cornersDotOptions: {
+							...cornerDotColorConfig,
+							type: cornerDotStyle,
 						},
 						image: logoDataUrl || undefined,
 						imageOptions: {
-							hideBackgroundDots: true,
+							hideBackgroundDots,
 							imageSize: logoSizeRatio,
-							margin: 4,
+							margin: logoMargin,
 							crossOrigin: "anonymous",
 						},
 					});
@@ -120,14 +159,23 @@ export const QRCodeRenderer = forwardRef<
 							errorCorrectionLevel: errorLevel,
 						},
 						dotsOptions: {
-							color: foregroundColor,
+							...dotsColorConfig,
+							type: dotStyle,
 						},
-						backgroundOptions: {
-							color: backgroundColor,
+						backgroundOptions: backgroundColorConfig,
+						cornersSquareOptions: {
+							...cornerSquareColorConfig,
+							type: cornerSquareStyle,
+						},
+						cornersDotOptions: {
+							...cornerDotColorConfig,
+							type: cornerDotStyle,
 						},
 						image: logoDataUrl || undefined,
 						imageOptions: {
+							hideBackgroundDots,
 							imageSize: logoSizeRatio,
+							margin: logoMargin,
 						},
 					});
 				}
@@ -151,8 +199,16 @@ export const QRCodeRenderer = forwardRef<
 			size,
 			margin,
 			errorCorrectionLevel,
+			shape,
+			dotStyle,
+			cornerSquareStyle,
+			cornerSquareColor,
+			cornerDotStyle,
+			cornerDotColor,
 			logoDataUrl,
 			logoSize,
+			logoMargin,
+			hideBackgroundDots,
 		]);
 
 		// Don't render if there's no content
@@ -163,7 +219,7 @@ export const QRCodeRenderer = forwardRef<
 		return (
 			<div
 				ref={containerRef}
-				style={{ width: size, height: size }}
+				className="flex items-center justify-center"
 				aria-label="QR code"
 			/>
 		);

@@ -18,18 +18,30 @@ A modern, feature-rich QR code generator built with React, TypeScript, and HeroU
 - **Event** - Calendar events with timezone support
 - **Location** - GPS coordinates (geo URI)
 
-### 🎨 Customization Options
+### 🎨 Advanced Styling Options
 - **Colors** - Custom foreground and background colors with live preview
+- **QR Shape** - Square or Circle QR code shapes
+- **Dot Styles** - 6 unique styles: Square, Rounded, Dots, Classy, Classy-Rounded, Extra-Rounded
+- **Corner Customization**
+  - Corner Square Styles: 7 options including Dot, Square, Rounded, Extra-Rounded, Dots, Classy, Classy-Rounded
+  - Corner Dot Styles: 7 options with independent color control
+  - Separate color pickers for corner squares and corner dots
 - **Size** - Adjustable QR code dimensions (128px - 1024px)
 - **Margin** - Configurable quiet zone (0-10 modules)
 - **Error Correction** - Four levels (L, M, Q, H) with automatic optimization
-- **Logo Branding** - Add your logo to the center of QR codes
+
+### 🖼️ Logo Branding
+- **Flexible Logo Integration** - Add your logo to the center of QR codes
   - Supports PNG, JPG, and SVG formats
-  - Adjustable logo size (10-30%)
-  - Automatic error correction level adjustment
+  - Adjustable logo size (10-50%)
+  - Configurable logo margin (0-20px padding)
+  - Hide background dots option for cleaner appearance
+  - Automatic error correction level adjustment to High (H)
 
 ### 📥 Export Formats
 - **PNG** - High-quality raster images
+- **JPEG** - Compressed raster format
+- **WEBP** - Modern web-optimized format
 - **SVG** - Scalable vector graphics
 - Timestamped filenames for easy organization
 
@@ -133,8 +145,18 @@ src/
 1. Create any QR code type
 2. Scroll to "Logo Branding" section
 3. Drag & drop or click to upload your logo
-4. Adjust logo size (recommended: 10-25%)
-5. Error correction automatically sets to High (H)
+4. Adjust logo size (recommended: 10-40%)
+5. Configure logo margin for padding around the logo
+6. Toggle "Hide Background Dots" for cleaner appearance
+7. Error correction automatically sets to High (H)
+
+### Styling Your QR Code
+1. Navigate to the "Shape & Dots" tab
+2. Choose between Square or Circle QR shape
+3. Select from 6 different dot styles for unique appearance
+4. Go to "Corners" tab to customize corner markers
+5. Set independent colors for corner squares and corner dots
+6. Create stunning, branded QR codes that stand out!
 
 ### Creating a Calendar Event
 1. Select "Event" from the bottom navigation
@@ -154,11 +176,20 @@ src/
 ### Logo Guidelines
 - **Supported formats**: PNG, JPG, SVG
 - **Max file size**: 2MB
-- **Recommended size**: 10-25% of QR code
+- **Recommended size**: 10-40% of QR code
 - **Best practices**: 
   - Use simple, high-contrast logos
   - Avoid very detailed images
   - Keep logo centered
+  - Add margin around logo for better visibility
+  - Enable "Hide Background Dots" for cleaner integration
+
+### Styling Best Practices
+- **Dot Styles**: Rounded and Extra-Rounded styles work great for modern, friendly designs
+- **Corner Styles**: Mix and match corner square and dot styles for unique looks
+- **Colors**: Use contrasting colors for better scannability
+- **Shape**: Circle shape adds random dots around the QR code for artistic effect
+- **Error Correction**: Always use High (H) when adding logos or using complex styles
 
 ## 🔧 Development
 

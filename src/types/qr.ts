@@ -29,7 +29,74 @@ export type ErrorCorrectionLevel = "L" | "M" | "Q" | "H";
 /**
  * Export format options
  */
-export type ExportFormat = "png" | "svg";
+export type ExportFormat = "png" | "svg" | "jpeg" | "webp";
+
+/**
+ * QR code shape options
+ */
+export type QRShape = "square" | "circle";
+
+/**
+ * Dot style options for QR code pattern
+ */
+export type DotStyle =
+	| "square"
+	| "rounded"
+	| "dots"
+	| "classy"
+	| "classy-rounded"
+	| "extra-rounded";
+
+/**
+ * Corner square style options
+ */
+export type CornerSquareStyle =
+	| "dot"
+	| "square"
+	| "extra-rounded"
+	| "rounded"
+	| "dots"
+	| "classy"
+	| "classy-rounded";
+
+/**
+ * Corner dot style options
+ */
+export type CornerDotStyle =
+	| "dot"
+	| "square"
+	| "rounded"
+	| "dots"
+	| "classy"
+	| "classy-rounded"
+	| "extra-rounded";
+
+/**
+ * Gradient type options
+ */
+export type GradientType = "linear" | "radial";
+
+/**
+ * Color stop for gradients
+ */
+export interface ColorStop {
+	offset: number; // 0-1
+	color: string;
+}
+
+/**
+ * Gradient configuration
+ */
+export interface GradientConfig {
+	type: GradientType;
+	rotation: number; // in radians
+	colorStops: ColorStop[];
+}
+
+/**
+ * Color or gradient option
+ */
+export type ColorOption = string | GradientConfig;
 
 /**
  * WiFi encryption types
@@ -44,17 +111,27 @@ export interface QRState {
 	dataType: QRDataType;
 	content: string;
 
-	// Style configuration
-	foregroundColor: string;
-	backgroundColor: string;
+	// Basic style configuration
+	foregroundColor: ColorOption;
+	backgroundColor: ColorOption;
 	size: number;
 	margin: number;
 	errorCorrectionLevel: ErrorCorrectionLevel;
+	shape: QRShape;
+
+	// Advanced dot styling
+	dotStyle: DotStyle;
+	cornerSquareStyle: CornerSquareStyle;
+	cornerSquareColor: ColorOption;
+	cornerDotStyle: CornerDotStyle;
+	cornerDotColor: ColorOption;
 
 	// Branding
 	logo: File | null;
 	logoDataUrl: string | null;
 	logoSize: number;
+	logoMargin: number;
+	hideBackgroundDots: boolean;
 
 	// Export
 	exportFormat: ExportFormat;
@@ -68,11 +145,17 @@ export interface QRState {
  * Style options for QR code appearance
  */
 export interface QRStyleOptions {
-	foregroundColor: string;
-	backgroundColor: string;
+	foregroundColor: ColorOption;
+	backgroundColor: ColorOption;
 	size: number;
 	margin: number;
 	errorCorrectionLevel: ErrorCorrectionLevel;
+	shape: QRShape;
+	dotStyle: DotStyle;
+	cornerSquareStyle: CornerSquareStyle;
+	cornerSquareColor: ColorOption;
+	cornerDotStyle: CornerDotStyle;
+	cornerDotColor: ColorOption;
 }
 
 /**
@@ -82,6 +165,8 @@ export interface QRBrandingOptions {
 	logo: File | null;
 	logoDataUrl: string | null;
 	logoSize: number;
+	logoMargin: number;
+	hideBackgroundDots: boolean;
 }
 
 /**
@@ -170,11 +255,17 @@ export interface DataInputFormProps {
 }
 
 export interface StyleConfiguratorProps {
-	foregroundColor: string;
-	backgroundColor: string;
+	foregroundColor: ColorOption;
+	backgroundColor: ColorOption;
 	size: number;
 	margin: number;
 	errorCorrectionLevel: ErrorCorrectionLevel;
+	shape: QRShape;
+	dotStyle: DotStyle;
+	cornerSquareStyle: CornerSquareStyle;
+	cornerSquareColor: ColorOption;
+	cornerDotStyle: CornerDotStyle;
+	cornerDotColor: ColorOption;
 	hasLogo?: boolean;
 	onChange: (updates: Partial<QRState>) => void;
 }
@@ -183,10 +274,14 @@ export interface BrandingPanelProps {
 	logo: File | null;
 	logoDataUrl: string | null;
 	logoSize: number;
+	logoMargin: number;
+	hideBackgroundDots: boolean;
 	errorCorrectionLevel: ErrorCorrectionLevel;
 	onLogoUpload: (file: File) => void;
 	onLogoRemove: () => void;
 	onLogoSizeChange: (size: number) => void;
+	onLogoMarginChange: (margin: number) => void;
+	onHideBackgroundDotsChange: (hide: boolean) => void;
 	onErrorCorrectionChange: (level: "H") => void;
 }
 
@@ -198,13 +293,21 @@ export interface QRPreviewCanvasProps {
 
 export interface QRCodeRendererProps {
 	content: string;
-	foregroundColor: string;
-	backgroundColor: string;
+	foregroundColor: ColorOption;
+	backgroundColor: ColorOption;
 	size: number;
 	margin: number;
 	errorCorrectionLevel: ErrorCorrectionLevel;
+	shape: QRShape;
+	dotStyle: DotStyle;
+	cornerSquareStyle: CornerSquareStyle;
+	cornerSquareColor: ColorOption;
+	cornerDotStyle: CornerDotStyle;
+	cornerDotColor: ColorOption;
 	logoDataUrl: string | null;
 	logoSize: number;
+	logoMargin: number;
+	hideBackgroundDots: boolean;
 	onRenderComplete?: () => void;
 	onRenderError?: (error: string) => void;
 }

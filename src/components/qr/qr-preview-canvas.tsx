@@ -103,8 +103,16 @@ export const QRPreviewCanvas = forwardRef<
 							size={debouncedState.size}
 							margin={debouncedState.margin}
 							errorCorrectionLevel={debouncedState.errorCorrectionLevel}
+							shape={debouncedState.shape}
+							dotStyle={debouncedState.dotStyle}
+							cornerSquareStyle={debouncedState.cornerSquareStyle}
+							cornerSquareColor={debouncedState.cornerSquareColor}
+							cornerDotStyle={debouncedState.cornerDotStyle}
+							cornerDotColor={debouncedState.cornerDotColor}
 							logoDataUrl={debouncedState.logoDataUrl}
 							logoSize={debouncedState.logoSize}
+							logoMargin={debouncedState.logoMargin}
+							hideBackgroundDots={debouncedState.hideBackgroundDots}
 							onRenderComplete={handleRenderComplete}
 							onRenderError={handleRenderError}
 						/>
