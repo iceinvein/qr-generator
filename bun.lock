@@ -14,6 +14,7 @@
         "@heroui/kbd": "2.2.22",
         "@heroui/link": "2.2.23",
         "@heroui/navbar": "2.2.25",
+        "@heroui/popover": "^2.3.27",
         "@heroui/radio": "^2.3.27",
         "@heroui/select": "^2.4.28",
         "@heroui/slider": "^2.4.24",
@@ -35,6 +36,7 @@
         "lucide-react": "^0.548.0",
         "qr-code-styling": "^1.9.2",
         "react": "19.2.0",
+        "react-colorful": "^5.6.1",
         "react-dom": "19.2.0",
         "react-router-dom": "7.9.5",
         "tailwind-variants": "3.1.1",
@@ -638,6 +640,8 @@
     "qrcode-generator": ["qrcode-generator@1.5.2", "", {}, "sha512-pItrW0Z9HnDBnFmgiNrY1uxRdri32Uh9EjNYLPVC2zZ3ZRIIEqBoDgm4DkvDwNNDHTK7FNkmr8zAa77BYc9xNw=="],
 
     "react": ["react@19.2.0", "", {}, "sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ=="],
+
+    "react-colorful": ["react-colorful@5.6.1", "", { "peerDependencies": { "react": ">=16.8.0", "react-dom": ">=16.8.0" } }, "sha512-1exovf0uGTGyq5mXQT0zgQ80uvj2PCwvF8zY1RN9/vbJVSjSo3fsB/4L3ObbF7u70NduSiK4xu4Y6q1MHoUGEw=="],
 
     "react-dom": ["react-dom@19.2.0", "", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.0" } }, "sha512-UlbRu4cAiGaIewkPyiRGJk0imDN2T3JjieT6spoL2UeSf5od4n5LB/mQ4ejmxhCFT1tYe8IvaFulzynWovsEFQ=="],
 

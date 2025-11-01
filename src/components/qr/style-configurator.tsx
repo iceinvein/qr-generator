@@ -1,9 +1,11 @@
-import { Input } from "@heroui/input";
+import { Button } from "@heroui/button";
 import { Select, SelectItem } from "@heroui/select";
 import { Slider } from "@heroui/slider";
 import { Tooltip } from "@heroui/tooltip";
+import { RotateCcw, Shuffle } from "lucide-react";
 import { useState } from "react";
 import { type AnimatedTab, AnimatedTabs } from "@/components/ui/animated-tabs";
+import { ColorPicker } from "@/components/ui/color-picker";
 import type {
 	ColorOption,
 	CornerDotStyle,
@@ -13,6 +15,10 @@ import type {
 	QRShape,
 	StyleConfiguratorProps,
 } from "@/types/qr";
+import {
+	checkContrastLevel,
+	generateContrastingColors,
+} from "@/utils/color-contrast";
 
 /**
  * StyleConfigurator component for customizing QR code appearance
@@ -90,6 +96,39 @@ export function StyleConfigurator({
 		return typeof color === "string" ? color : "#000000";
 	};
 
+	// Randomize all colors with guaranteed good contrast
+	const handleRandomizeColors = () => {
+		// Generate foreground and background with good contrast
+		const { foreground, background } = generateContrastingColors();
+		
+		// Generate random colors for corners (with good contrast against background)
+		const letters = "0123456789ABCDEF";
+		const generateRandomColor = () => {
+			let color = "#";
+			for (let i = 0; i < 6; i++) {
+				color += letters[Math.floor(Math.random() * 16)];
+			}
+			return color;
+		};
+
+		onChange({
+			foregroundColor: foreground,
+			backgroundColor: background,
+			cornerSquareColor: generateRandomColor(),
+			cornerDotColor: generateRandomColor(),
+		});
+	};
+
+	// Reset to classic black and white
+	const handleResetToBlackAndWhite = () => {
+		onChange({
+			foregroundColor: "#000000",
+			backgroundColor: "#FFFFFF",
+			cornerSquareColor: "#000000",
+			cornerDotColor: "#000000",
+		});
+	};
+
 	// Define tabs for AnimatedTabs component
 	const tabs: AnimatedTab[] = [
 		{
@@ -98,101 +137,144 @@ export function StyleConfigurator({
 			color: "#3b82f6",
 			content: (
 				<>
-					<h3 className="font-semibold text-lg">Colors</h3>
+					<div className="flex items-center justify-between">
+						<h3 className="font-semibold text-lg">Colors</h3>
+						<div className="flex gap-2">
+							<Tooltip content="Reset to classic black and white">
+								<Button
+									color="default"
+									variant="flat"
+									size="sm"
+									startContent={<RotateCcw size={16} />}
+									onPress={handleResetToBlackAndWhite}
+									aria-label="Reset to black and white"
+								>
+									Reset
+								</Button>
+							</Tooltip>
+							<Tooltip content="Generate random colors for all elements">
+								<Button
+									color="primary"
+									variant="flat"
+									size="sm"
+									startContent={<Shuffle size={16} />}
+									onPress={handleRandomizeColors}
+									aria-label="Randomize colors"
+								>
+									Randomize
+								</Button>
+							</Tooltip>
+						</div>
+					</div>
 					<div className="space-y-4">
 						<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 							{/* Foreground Color Picker */}
-							<div className="flex flex-col space-y-2">
-								<Tooltip content="Color of the QR code pattern">
-									<label className="font-medium text-sm">
-										Foreground Color
-									</label>
-								</Tooltip>
-								<div className="flex items-stretch gap-2">
-									<Tooltip content="Click to pick a color">
-										<div className="shrink-0">
-											<Input
-												type="color"
-												value={getColorString(foregroundColor)}
-												onValueChange={(value) =>
-													onChange({ foregroundColor: value })
-												}
-												classNames={{
-													input: "cursor-pointer",
-													inputWrapper: "h-12 w-16",
-												}}
-												aria-label="Foreground color picker"
-											/>
-										</div>
-									</Tooltip>
-									<Tooltip content="Enter hex color code">
-										<Input
-											type="text"
-											value={getColorString(foregroundColor)}
-											onValueChange={(value) =>
-												onChange({ foregroundColor: value })
-											}
-											placeholder="#000000"
-											classNames={{
-												inputWrapper: "h-12",
-											}}
-											aria-label="Foreground color hex value"
-										/>
-									</Tooltip>
-									<div
-										className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
-										style={{ backgroundColor: getColorString(foregroundColor) }}
-										aria-label="Foreground color preview"
-									/>
-								</div>
-							</div>
+							<ColorPicker
+								color={getColorString(foregroundColor)}
+								onChange={(value) => onChange({ foregroundColor: value })}
+								label="Foreground Color"
+							/>
 
 							{/* Background Color Picker */}
-							<div className="flex flex-col space-y-2">
-								<Tooltip content="Background color behind the QR code">
-									<label className="font-medium text-sm">
-										Background Color
-									</label>
-								</Tooltip>
-								<div className="flex items-stretch gap-2">
-									<Tooltip content="Click to pick a color">
-										<div className="shrink-0">
-											<Input
-												type="color"
-												value={getColorString(backgroundColor)}
-												onValueChange={(value) =>
-													onChange({ backgroundColor: value })
-												}
-												classNames={{
-													input: "cursor-pointer",
-													inputWrapper: "h-12 w-16",
-												}}
-												aria-label="Background color picker"
-											/>
-										</div>
-									</Tooltip>
-									<Tooltip content="Enter hex color code">
-										<Input
-											type="text"
-											value={getColorString(backgroundColor)}
-											onValueChange={(value) =>
-												onChange({ backgroundColor: value })
-											}
-											placeholder="#FFFFFF"
-											classNames={{
-												inputWrapper: "h-12",
-											}}
-											aria-label="Background color hex value"
-										/>
-									</Tooltip>
-									<div
-										className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
-										style={{ backgroundColor: getColorString(backgroundColor) }}
-										aria-label="Background color preview"
-									/>
-								</div>
-							</div>
+							<ColorPicker
+								color={getColorString(backgroundColor)}
+								onChange={(value) => onChange({ backgroundColor: value })}
+								label="Background Color"
+							/>
 						</div>
+
+						{/* Contrast Warning */}
+						{(() => {
+							const contrast = checkContrastLevel(
+								getColorString(foregroundColor),
+								getColorString(backgroundColor),
+							);
+
+							if (contrast.level === "excellent") {
+								return (
+									<div
+										className="rounded-lg border border-success-200 bg-success-50 p-3 dark:bg-success-100/10"
+										role="status"
+									>
+										<div className="flex items-start gap-2">
+											<span className="text-lg">✓</span>
+											<div>
+												<p className="font-semibold text-success-700 text-sm dark:text-success-500">
+													Excellent Contrast ({contrast.ratio.toFixed(1)}:1)
+												</p>
+												<p className="text-success-600 text-xs dark:text-success-400">
+													Your QR code will scan reliably in all conditions.
+												</p>
+											</div>
+										</div>
+									</div>
+								);
+							}
+
+							if (contrast.level === "good") {
+								return (
+									<div
+										className="rounded-lg border border-primary-200 bg-primary-50 p-3 dark:bg-primary-100/10"
+										role="status"
+									>
+										<div className="flex items-start gap-2">
+											<span className="text-lg">✓</span>
+											<div>
+												<p className="font-semibold text-primary-700 text-sm dark:text-primary-500">
+													Good Contrast ({contrast.ratio.toFixed(1)}:1)
+												</p>
+												<p className="text-primary-600 text-xs dark:text-primary-400">
+													Your QR code should scan well in most conditions.
+												</p>
+											</div>
+										</div>
+									</div>
+								);
+							}
+
+							if (contrast.level === "fair") {
+								return (
+									<div
+										className="rounded-lg border border-warning-200 bg-warning-50 p-3 dark:bg-warning-100/10"
+										role="alert"
+										aria-live="polite"
+									>
+										<div className="flex items-start gap-2">
+											<span className="text-lg">⚠️</span>
+											<div>
+												<p className="font-semibold text-warning-700 text-sm dark:text-warning-500">
+													Low Contrast ({contrast.ratio.toFixed(1)}:1)
+												</p>
+												<p className="text-warning-600 text-xs dark:text-warning-400">
+													{contrast.warning}
+												</p>
+											</div>
+										</div>
+									</div>
+								);
+							}
+
+							// Poor contrast
+							return (
+								<div
+									className="rounded-lg border border-danger-200 bg-danger-50 p-3 dark:bg-danger-100/10"
+									role="alert"
+									aria-live="assertive"
+								>
+									<div className="flex items-start gap-2">
+										<span className="text-lg">⛔</span>
+										<div>
+											<p className="font-semibold text-danger-700 text-sm dark:text-danger-500">
+												Poor Contrast ({contrast.ratio.toFixed(1)}:1)
+											</p>
+											<p className="text-danger-600 text-xs dark:text-danger-400">
+												{contrast.warning}
+											</p>
+										</div>
+									</div>
+								</div>
+							);
+						})()}
 					</div>
 				</>
 			),
@@ -282,52 +364,11 @@ export function StyleConfigurator({
 						</div>
 
 						{/* Corner Square Color */}
-						<div className="space-y-2">
-							<Tooltip content="Color of the corner square markers">
-								<label className="font-medium text-sm">
-									Corner Square Color
-								</label>
-							</Tooltip>
-							<div className="flex items-stretch gap-2">
-								<Tooltip content="Click to pick a color">
-									<div className="shrink-0">
-										<Input
-											type="color"
-											value={getColorString(cornerSquareColor)}
-											onValueChange={(value) =>
-												onChange({ cornerSquareColor: value })
-											}
-											classNames={{
-												input: "cursor-pointer",
-												inputWrapper: "h-12 w-16",
-											}}
-											aria-label="Corner square color picker"
-										/>
-									</div>
-								</Tooltip>
-								<Tooltip content="Enter hex color code">
-									<Input
-										type="text"
-										value={getColorString(cornerSquareColor)}
-										onValueChange={(value) =>
-											onChange({ cornerSquareColor: value })
-										}
-										placeholder="#000000"
-										classNames={{
-											inputWrapper: "h-12",
-										}}
-										aria-label="Corner square color hex value"
-									/>
-								</Tooltip>
-								<div
-									className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
-									style={{
-										backgroundColor: getColorString(cornerSquareColor),
-									}}
-									aria-label="Corner square color preview"
-								/>
-							</div>
-						</div>
+						<ColorPicker
+							color={getColorString(cornerSquareColor)}
+							onChange={(value) => onChange({ cornerSquareColor: value })}
+							label="Corner Square Color"
+						/>
 
 						{/* Corner Dot Style */}
 						<div className="space-y-2">
@@ -351,48 +392,11 @@ export function StyleConfigurator({
 						</div>
 
 						{/* Corner Dot Color */}
-						<div className="space-y-2">
-							<Tooltip content="Color of the corner dot markers">
-								<label className="font-medium text-sm">Corner Dot Color</label>
-							</Tooltip>
-							<div className="flex items-stretch gap-2">
-								<Tooltip content="Click to pick a color">
-									<div className="shrink-0">
-										<Input
-											type="color"
-											value={getColorString(cornerDotColor)}
-											onValueChange={(value) =>
-												onChange({ cornerDotColor: value })
-											}
-											classNames={{
-												input: "cursor-pointer",
-												inputWrapper: "h-12 w-16",
-											}}
-											aria-label="Corner dot color picker"
-										/>
-									</div>
-								</Tooltip>
-								<Tooltip content="Enter hex color code">
-									<Input
-										type="text"
-										value={getColorString(cornerDotColor)}
-										onValueChange={(value) =>
-											onChange({ cornerDotColor: value })
-										}
-										placeholder="#000000"
-										classNames={{
-											inputWrapper: "h-12",
-										}}
-										aria-label="Corner dot color hex value"
-									/>
-								</Tooltip>
-								<div
-									className="h-12 w-12 shrink-0 rounded-md border-2 border-default-300"
-									style={{ backgroundColor: getColorString(cornerDotColor) }}
-									aria-label="Corner dot color preview"
-								/>
-							</div>
-						</div>
+						<ColorPicker
+							color={getColorString(cornerDotColor)}
+							onChange={(value) => onChange({ cornerDotColor: value })}
+							label="Corner Dot Color"
+						/>
 					</div>
 				</>
 			),

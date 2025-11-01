@@ -13,3 +13,38 @@
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 }
+
+/* React Colorful Styles */
+.react-colorful {
+	width: 100% !important;
+	height: 180px !important;
+	border-radius: 8px;
+}
+
+.react-colorful__saturation {
+	border-radius: 8px 8px 0 0;
+	border-bottom: none;
+}
+
+.react-colorful__hue {
+	height: 24px;
+	border-radius: 0 0 8px 8px;
+	margin-top: 12px;
+}
+
+.react-colorful__pointer {
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.react-colorful__saturation-pointer {
+	width: 20px;
+	height: 20px;
+}
+
+.react-colorful__hue-pointer {
+	width: 20px;
+	height: 20px;
+}

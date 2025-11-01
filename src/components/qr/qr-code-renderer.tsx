@@ -127,7 +127,6 @@ export const QRCodeRenderer = forwardRef<
 						dotsOptions: {
 							...dotsColorConfig,
 							type: dotStyle,
-							roundSize: false,
 						},
 						backgroundOptions: backgroundColorConfig,
 						cornersSquareOptions: {
