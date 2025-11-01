@@ -551,28 +551,33 @@ function CalendarInput({
 				</p>
 			</div>
 
-			<div className="grid grid-cols-2 gap-4">
-				<DatePicker
-					label="Start Date & Time"
-					granularity="minute"
-					value={startDate}
-					onChange={(value) => {
-						setStartDate(value);
-						updateContent(undefined, undefined, undefined, value);
-					}}
-					isRequired
-				/>
-				<DatePicker
-					label="End Date & Time"
-					granularity="minute"
-					value={endDate}
-					onChange={(value) => {
-						setEndDate(value);
-						updateContent(undefined, undefined, undefined, undefined, value);
-					}}
-					isRequired
-				/>
-			</div>
+		{/* Separate Date & Time Pickers */}
+		<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+			<DatePicker
+				label="Start Date & Time"
+				granularity="minute"
+				value={startDate}
+				onChange={(value) => {
+					setStartDate(value);
+					updateContent(undefined, undefined, undefined, value);
+				}}
+				isRequired
+				hideTimeZone
+				description="Event start"
+			/>
+			<DatePicker
+				label="End Date & Time"
+				granularity="minute"
+				value={endDate}
+				onChange={(value) => {
+					setEndDate(value);
+					updateContent(undefined, undefined, undefined, undefined, value);
+				}}
+				isRequired
+				hideTimeZone
+				description="Event end"
+			/>
+		</div>
 			<Tooltip content="Event location or venue (optional)">
 				<Input
 					label="Location (Optional)"
